@@ -7,9 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  tag: 0.3
-  img_name: ${{ github.repository }}
-  
+  tag: 0.3  
 
 jobs:
   docker:
@@ -17,7 +15,7 @@ jobs:
     steps:
       - id: read-docker-image-identifiers
         name: Read Docker Image Identifiers
-        run: echo "IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+        run: echo "img_name=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
       - id: string
         uses: ASzc/change-string-case-action@v5
         with:
@@ -41,6 +39,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          registry: docker.pkg.github.com
-          repository: ${{ env.IMAGE_REPOSITORY }}/env.img_name
           tags: ${{ env.img_name }}:latest,${{ env.img_name }}:${{ env.tag }}
