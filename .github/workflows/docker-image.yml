@@ -30,12 +30,12 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Publish to GitHub Packages
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: ${{ github.repository }}/next
+          repository: ${{ env.img_name }}/next
           tags: ${{ env.img_name }}:latest,${{ env.img_name }}:${{ env.tag }}          
 #      -
 #        name: Build and push
