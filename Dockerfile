@@ -1,5 +1,5 @@
 # base img
-FROM condaforge/mambaforge:4.12.0-0
+FROM mambaorg/micromamba:1.4
 
 # install basic dependencies
 RUN apt-get update && \
