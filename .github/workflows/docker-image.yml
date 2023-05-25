@@ -16,12 +16,6 @@ jobs:
       - id: read-docker-image-identifiers
         name: Read Docker Image Identifiers
         run: echo "img_name=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
-      - id: string
-        uses: ASzc/change-string-case-action@v5
-        with:
-          string: XyZzY
-      - id: step2
-        run: echo ${{ steps.string.outputs.lowercase }}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -35,8 +29,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
-        uses: docker/build-push-action@v3
+        name: Publish to GitHub Packages
+        uses: docker/build-push-action@v1
         with:
-          push: ${{ github.event_name != 'pull_request' }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: ${{ github.repository }}/next
           tags: ${{ env.img_name }}:latest,${{ env.img_name }}:${{ env.tag }}          
+#      -
+#        name: Build and push
+#        uses: docker/build-push-action@v3
+#        with:
+#          push: ${{ github.event_name != 'pull_request' }}
+#          tags: ${{ env.img_name }}:latest,${{ env.img_name }}:${{ env.tag }}          
