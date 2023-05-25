@@ -15,6 +15,9 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - id: read-docker-image-identifiers
+        name: Read Docker Image Identifiers
+        run: echo ::set-env name=IMAGE_REPOSITORY::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')    
       - id: string
         uses: ASzc/change-string-case-action@v5
         with:
@@ -38,4 +41,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
+          registry: docker.pkg.github.com
+          repository: ${{ env.IMAGE_REPOSITORY }}/env.img_name
           tags: ${{ env.img_name }}:latest,${{ env.img_name }}:${{ env.tag }}
