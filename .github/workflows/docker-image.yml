@@ -38,5 +38,5 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          push: true
-          tags: ${{ env.img_name }}:latest
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.img_name }}:latest,${{ env.img_name }}:${{ env.tag }}          
