@@ -1,9 +1,10 @@
-name: ssuissero
+name: SsuisSero
 channels:
   - bioconda
   - conda-forge
   - defaults
 dependencies:
+  - ssuissero
   - samtools=1.9
   - medaka=1.0.1
   - freebayes=1.3.2
