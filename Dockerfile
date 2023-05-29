@@ -4,7 +4,9 @@ FROM condaforge/mambaforge:4.12.0-0
 # install basic dependencies
 RUN apt-get update && \
     apt-get install -y curl wget && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    echo "deb http://security.ubuntu.com/ubuntu impish-security main" | tee /etc/apt/sources.list.d/impish-security.list && \
+    apt-get install libssl1.1
 
 RUN addgroup --gid 1000 docker && \
     adduser --uid 1000 --ingroup docker --home /home/docker --shell /bin/sh --disabled-password --gecos "" docker
