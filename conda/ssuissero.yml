@@ -5,6 +5,7 @@ channels:
   - defaults
 dependencies:
   - ssuissero
+  - openssh=1.1.1
   - samtools=1.9
   - medaka=1.0.1
   - freebayes=1.3.2
